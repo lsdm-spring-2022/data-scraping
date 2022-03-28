@@ -1,8 +1,0 @@
-version: '3.8'
-
-services:
-  data-scraping:
-    image: .
-    container_name: datascraping
-    volumes:
-      - ./reddit:/app

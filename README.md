@@ -13,7 +13,7 @@ subreddit was used as a substitute for the United States. The country subscriber
 TODO Insert table here
 
 Using the [Pushshift API](https://pushshift.io/), we are fetching the top 500 posts on Reddit for every day of a year.
-Currently, we are collecting data starting at Jan 1 2012 until the current day (2022-Mar-27).
+Currently, we are collecting data starting at Jan 1 2012 until the Dec 31 2021.
 
 Documentation for the Pushshift API is located at: https://github.com/pushshift/api
 
@@ -48,4 +48,16 @@ The response from the Pushshift API will be the top 500 posts. An example of a s
   "title": "Just A Drop Of Water In Front Of A Map",
   "url": "http://i.imgur.com/MwIvz.jpg"
 }
+```
+
+### Running the Container
+
+Build the image with the following command
+```bash
+docker build -t <image name> .
+```
+
+Run the container with the following command
+```bash
+docker run -d -v $(pwd):/app <image name>
 ```

@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 
 MONTHS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
+YEARS = [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021]
 
 START_HOUR = 0
 START_MINUTE = 0
@@ -138,8 +138,8 @@ def main():
                 for week in cal:
                     for day in week:
                         if day != 0:
-                            print(f'Year: {year}, Month: {month}, Day: {day}')
-                            write_to_log(f'Year: {year}, Month: {month}, Day: {day}', 'log')
+                            print(f'Country: {country}, Year: {year}, Month: {month}, Day: {day}')
+                            write_to_log(f'Country: {country}, Year: {year}, Month: {month}, Day: {day}', 'log')
                             start_epoch = get_start_epoch(year, month, day)
                             end_epoch = get_end_epoch(year, month, day)
                             print(f'StartEpoch: {start_epoch}, EndEpoch: {end_epoch}')
@@ -154,8 +154,8 @@ def main():
                                 print('Dataframe creation complete. Sleeping for 10 seconds...')
                                 write_to_log('Dataframe creation complete. Sleeping for 10 seconds...', 'log')
                                 time.sleep(10)
-                print(f'Concatenating dataframes for month {month}...')
-                write_to_log(f'Concatenating dataframes for month {month}...', 'log')
+                print(f'Concatenating dataframes for country {country}, month {month}...')
+                write_to_log(f'Concatenating dataframes for country {country}, month {month}...', 'log')
                 month_df = pd.concat(df_list)
                 print(f'Writing dataframe to CSV ({country}-{year}-{month}-reddit-data.csv)', 'log')
                 month_df.to_csv(f'reddit/data/{country}-{year}-{month}-reddit-data.csv', sep='\t', encoding='utf-8')

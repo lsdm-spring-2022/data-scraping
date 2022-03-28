@@ -132,5 +132,6 @@ dmypy.json
 .idea/
 
 # Reddit
-reddit/data
-reddit/errors
+reddit/data/
+reddit/error/
+reddit/log/
