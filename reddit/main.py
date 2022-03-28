@@ -116,7 +116,7 @@ def get_pushshift_data(start, end, country):
         else:
             raise Exception(f'{response.reason}')
     except Exception as e:
-        write_to_log(f'Error occurred for country: {country}, start: {start}, end: {end}', 'error')
+        write_to_log(f'Error occurred for country: {country}, start: {start}, end: {end}, uri: {uri}', 'error')
         print(e)
         write_to_log(e, 'error')
         return None
