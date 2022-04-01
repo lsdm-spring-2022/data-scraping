@@ -20,6 +20,8 @@ END_MINUTE = 59
 END_SECOND = 59
 END_MICROSECOND = 999999
 
+CWD = os.getcwd()
+
 COUNTRIES = [
     'canada',
     'australia',
@@ -74,18 +76,18 @@ COUNTRIES = [
 
 
 def create_log_file(log_name):
-    log_file = Path(f'reddit/{log_name}/data-scraping-{log_name}.txt')
+    log_file = Path(f'{CWD}/{log_name}/data-scraping-{log_name}.txt')
     log_file.touch(exist_ok=True)
 
 
 def write_to_log(message, log_dir):
-    with open(f'reddit/{log_dir}/data-scraping-{log_dir}.txt', 'a') as log_file:
+    with open(f'{CWD}/{log_dir}/data-scraping-{log_dir}.txt', 'a') as log_file:
         log_file.write(f'{message}\n')
 
 
 def create_dir(dir_name):
-    if not os.path.exists(f'reddit/{dir_name}'):
-        os.makedirs(f'reddit/{dir_name}')
+    if not os.path.exists(f'{CWD}/{dir_name}'):
+        os.makedirs(f'{CWD}/{dir_name}')
 
 
 def get_start_epoch(year, month, day):
@@ -116,7 +118,8 @@ def get_pushshift_data(start, end, country):
         else:
             raise Exception(f'{response.reason}')
     except Exception as e:
-        write_to_log(f'Error occurred for country: {country}, start: {start}, end: {end}, uri: {uri}', 'error')
+        write_to_log(
+            f'Error occurred for country: {country}, start: {start}, end: {end}, uri: {uri}', 'error')
         print(e)
         write_to_log(e, 'error')
         return None
@@ -139,30 +142,42 @@ def main():
                 for week in cal:
                     for day in week:
                         if day != 0:
-                            print(f'Country: {country}, Year: {year}, Month: {month}, Day: {day}')
-                            write_to_log(f'Country: {country}, Year: {year}, Month: {month}, Day: {day}', 'log')
+                            print(
+                                f'Country: {country}, Year: {year}, Month: {month}, Day: {day}')
+                            write_to_log(
+                                f'Country: {country}, Year: {year}, Month: {month}, Day: {day}', 'log')
                             start_epoch = get_start_epoch(year, month, day)
                             end_epoch = get_end_epoch(year, month, day)
-                            print(f'StartEpoch: {start_epoch}, EndEpoch: {end_epoch}')
+                            print(
+                                f'StartEpoch: {start_epoch}, EndEpoch: {end_epoch}')
                             print('Getting Pushshift data...')
                             write_to_log('Getting Pushshift data...', 'log')
-                            data = get_pushshift_data(start_epoch, end_epoch, country)
+                            data = get_pushshift_data(
+                                start_epoch, end_epoch, country)
                             if data is not None:
                                 print('Got Pushshift data. Creating dataframe...')
-                                write_to_log('Got Pushshift data. Creating dataframe...', 'log')
+                                write_to_log(
+                                    'Got Pushshift data. Creating dataframe...', 'log')
                                 df = pd.json_normalize(data['data'])
                                 df_list.append(df)
-                                print('Dataframe creation complete. Sleeping for 1 seconds...')
-                                write_to_log('Dataframe creation complete. Sleeping for 1 seconds...', 'log')
+                                print(
+                                    'Dataframe creation complete. Sleeping for 1 seconds...')
+                                write_to_log(
+                                    'Dataframe creation complete. Sleeping for 1 seconds...', 'log')
                                 time.sleep(1)
-                print(f'Concatenating dataframes for country {country}, month {month}...')
-                write_to_log(f'Concatenating dataframes for country {country}, month {month}...', 'log')
+                print(
+                    f'Concatenating dataframes for country {country}, month {month}...')
+                write_to_log(
+                    f'Concatenating dataframes for country {country}, month {month}...', 'log')
                 month_df = pd.concat(df_list)
-                print(f'Writing dataframe to CSV ({country}-{year}-{month}-reddit-data.csv)', 'log')
-                month_df.to_csv(f'reddit/data/{country}-{year}-{month}-reddit-data.csv', sep='\t', encoding='utf-8')
+                print(
+                    f'Writing dataframe to CSV ({country}-{year}-{month}-reddit-data.csv)', 'log')
+                month_df.to_csv(
+                    f'{CWD}/data/{country}-{year}-{month}-reddit-data.csv', sep='\t', encoding='utf-8')
     end_time = time.time() - start_time
     print(f'--- Data scraping process complete! Took {end_time} seconds ---')
-    write_to_log(f'--- Data scraping process complete! Took {end_time} seconds ---', 'log')
+    write_to_log(
+        f'--- Data scraping process complete! Took {end_time} seconds ---', 'log')
 
 
 if __name__ == "__main__":
