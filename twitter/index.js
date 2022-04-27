@@ -29,7 +29,7 @@ const createDataArray = (country, data) => {
       dataArr.push({
         country,
         created_at: formatDateString(data[0].created_at),
-        trend: trend.name,
+        trend: trend.name.replace(new RegExp('\'', 'g'), ''),
         tweet_volume: trend.tweet_volume || 0,
         as_of: formatDateString(data[0].as_of)
       })
