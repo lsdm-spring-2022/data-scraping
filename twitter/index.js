@@ -31,7 +31,8 @@ const createDataArray = (country, data) => {
         created_at: formatDateString(data[0].created_at),
         trend: trend.name,
         tweet_volume: trend.tweet_volume || 0,
-        as_of: formatDateString(data[0].as_of)
+        as_of: formatDateString(data[0].as_of),
+        date_retrieved: formatDateString(new Date().toISOString())
       })
     }
   }
