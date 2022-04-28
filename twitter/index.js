@@ -66,9 +66,8 @@ const main = async () => {
   for (const data of countryIds) {
     console.log(`Fetching data for ${data.country}`)
     const apiData = await fetchTrendingData(data.id)
-    const dataObject = createDataArray(data.country, apiData)
-    const formattedCountryName = data.country.toLowerCase().replace(' ', '-')
-    await createDataFile(formattedCountryName, dataObject)
+    const dataObject = createDataArray(data.name, apiData)
+    await createDataFile(data.name, dataObject)
     await sleep(5000)
   }
 }
